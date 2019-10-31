@@ -1,0 +1,80 @@
+<div class="row mt-4">
+
+    <div class="col-12 ">
+        <div class="row">
+            <div class="col-3">
+                <label for="nombre">Nombre</label>
+                <input 
+                (keyUp.enter)="editId== null ? addNew() : update()" 
+                type="text" 
+                class="form-control" 
+                id="nombre" 
+                [(ngModel)]="model.nombre" 
+                placeholder="Ingrese el Nombre">
+                
+            </div>
+            <div class="col-3">
+                <label for="contacto">Contacto</label>
+                <input 
+                (keyUp.enter)="editId== null ? addNew() : update()" 
+                type="text" 
+                class="form-control" 
+                id="contacto" 
+                (input)="formatText($event.target.value)"
+                pattern="[0-9]"
+                [(ngModel)]="model.numero" 
+                placeholder="Ingrese el contacto">
+                
+            </div>
+            <!-- <div class="col-3">
+                <label for="tipoContacto">Tipo contacto</label>
+                <select class="form-control" name="tipoContacto" id="tipoContacto" [(ngModel)]="model.tipoContacto">
+                    <option selected disabled>seleccione una opcion</option>
+                    <option [ngValue]="tipo" *ngFor="let tipo of convert(tipoContact)" >{{tipo}}</option>
+                </select>
+            </div> -->
+            <div class="col-1 ">
+                <button *ngIf="editId==null" class="btn btn-success mt-4"  (click)="addNew()">Agregar</button>
+                <button *ngIf="editId!=null" class="btn btn-info mt-4"  (click)="update()">Actualizar</button>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="col-12 mt-4">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Contacto</th>
+                <!-- <th scope="col">Tipo Contacto</th> -->
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contacto of contactosList; index as i">
+                
+                <td>{{contacto.nombre}}</td>
+                <td>{{contacto.numero}}</td>
+                <!-- <td>{{contacto.tipoContacto}}</td> -->
+                <td>
+                    <button class="btn btn-warning" (click)="setEditMode(i)">
+                        Editar
+                    </button>
+                    <button class="btn btn-danger ml-3" (click)="delete(i)">
+                        Eliminar
+                    </button>
+                </td>
+               
+              </tr>
+              <tr>
+                
+                <td colspan="3" style="text-align: center;" *ngIf="contactosList.length==0">
+                    No hay registros diponibles..
+                </td>
+                
+              </tr>
+              
+            </tbody>
+          </table>
+    </div>
+</div>
